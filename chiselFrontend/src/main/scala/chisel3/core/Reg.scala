@@ -82,6 +82,19 @@ object RegNext {
 
     reg
   }
+ 
+  /** Returns a register with the specified explicit type, next and reset initialization.
+    *
+    * Essentially a 1-cycle delayed version of the input signal.
+    */
+  def apply[T <: Data](model: T, next: T, init: T)(implicit sourceInfo: SourceInfo, compileOptions: CompileOptions): T = {
+    val reg = RegInit(model, init)
+
+    requireIsHardware(next, "reg next")
+    reg := next
+
+    reg
+  }
 }
 
 /** Utility for constructing hardware registers with an initialization value.
