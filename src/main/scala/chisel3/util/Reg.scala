@@ -20,6 +20,14 @@ object RegEnable {
     when (enable) { r := next }
     r
   }
+  
+  /** Returns a register with the explicit type, specified next, update enable gate, and reset initialization.
+    */
+  def apply[T <: Data](t: T, next: T, init: T, enable: Bool): T = {
+    val r = RegInit(t, init)
+    when (enable) { r := next }
+    r
+  }
 }
 
 object ShiftRegister
